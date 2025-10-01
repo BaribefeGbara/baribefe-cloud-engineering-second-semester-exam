@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baribefe Cloud Project</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            margin: 20px;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .info-box .value {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #667eea;
+            color: #666;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Baribefe's Cloud Infrastructure</h1>
+        
+        <div class="info-box">
+            <strong>SERVER IP ADDRESS:</strong>
+            <div class="value">SERVER_IP_PLACEHOLDER</div>
+        </div>
+        
+        <div class="info-box">
+            <strong>SERVER HOSTNAME:</strong>
+            <div class="value">SERVER_HOSTNAME_PLACEHOLDER</div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Deployed with Ansible Automation</strong></p>
+            <span class="badge">AWS EC2</span>
+            <span class="badge">NGINX</span>
+            <span class="badge">Load Balanced</span>
+            <p style="margin-top: 15px;"><strong>Student:</strong> Baribefe Gbara</p>
+        </div>
+    </div>
+</body>
+</html>
