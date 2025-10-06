@@ -1,0 +1,87 @@
+---
+- name: Deploy Baribefe's Website on NGINX
+  hosts: webservers
+  become: yes
+  tasks:
+    
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+
+    - name: Ensure NGINX is enabled and started on boot
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
+
+    - name: Get server private IP address
+      shell: hostname -I | awk '{print $1}'
+      register: server_ip
+
+    - name: Get server hostname
+      shell: hostname
+      register: server_hostname
+
+    - name: Clone GitHub repository
+      git:
+        repo: 'https://github.com/BaribefeGbara/baribefe-cloud-engineering-second-semester-exam.git'
+        dest: /tmp/website-repo
+        force: yes
+
+    - name: Copy HTML file to working location
+      copy:
+        src: /tmp/website-repo/index.html
+        dest: /tmp/index.html
+        remote_src: yes
+
+    - name: Replace IP placeholder with actual server IP
+      replace:
+        path: /tmp/index.html
+        regexp: 'SERVER_IP_PLACEHOLDER'
+        replace: '{{ server_ip.stdout }}'
+
+    - name: Replace hostname placeholder with actual hostname
+      replace:
+        path: /tmp/index.html
+        regexp: 'SERVER_HOSTNAME_PLACEHOLDER'
+        replace: '{{ server_hostname.stdout }}'
+
+    - name: Deploy customized HTML page to NGINX
+      copy:
+        src: /tmp/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+        remote_src: yes
+
+    - name: Remove default NGINX welcome page
+      file:
+        path: /var/www/html/index.nginx-debian.html
+        state: absent
+
+    - name: Restart NGINX
+      systemd:
+        name: nginx
+        state: restarted
+
+    - name: Verify NGINX is running
+      systemd:
+        name: nginx
+        state: started
+      register: nginx_status
+
+    - name: Display success message
+      debug:
+        msg: "✅ Successfully deployed on {{ inventory_hostname }} - Private IP: {{ server_ip.stdout }}"
